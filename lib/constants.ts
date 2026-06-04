@@ -7,6 +7,7 @@ export const UNIT_CONFIG: Record<UnitType, { label: string; baseUnit: UnitType; 
   kg: { label: 'Kilogram (kg)', baseUnit: 'g', factor: 1000 },
   ml: { label: 'Milliliter (mL)', baseUnit: 'ml', factor: 1 },
   l: { label: 'Liter (L)', baseUnit: 'ml', factor: 1000 },
+  gallon: { label: 'Gallon (gal)', baseUnit: 'ml', factor: 3785.41 },
   piece: { label: 'Piece', baseUnit: 'piece', factor: 1 },
   dozen: { label: 'Dozen', baseUnit: 'piece', factor: 12 },
   pack: { label: 'Pack', baseUnit: 'unit', factor: 1 },

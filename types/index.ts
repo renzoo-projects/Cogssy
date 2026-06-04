@@ -1,4 +1,4 @@
-export type UnitType = 'g' | 'kg' | 'ml' | 'l' | 'piece' | 'dozen' | 'pack' | 'box' | 'unit'
+export type UnitType = 'g' | 'kg' | 'ml' | 'l' | 'gallon' | 'piece' | 'dozen' | 'pack' | 'box' | 'unit'
 
 export const GROCERY_CATEGORIES = [
   'Produce', 'Dairy', 'Meat', 'Seafood', 'Baking', 'Spices',
