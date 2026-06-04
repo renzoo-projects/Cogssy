@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cogssy 🧮
 
-## Getting Started
+Cogssy helps you figure out how much your products actually cost to make and
+what you should sell them for. Stop guessing, start pricing. 🎯
 
-First, run the development server:
+## Tech ⚙️
+
+Next.js 16, React 19, TypeScript, Tailwind v4, @base-ui/react, localStorage.
+
+## Quick Start 🚀
 
 ```bash
+git clone <url>
+cd cogssy
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features ✨
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Unit conversion** 🔄 — buy by the kg, use by the gram
+- **Overhead presets** 📋 — 8 common overheads included
+- **Margin slider** 🎚️ — set your target margin, get the price
+- **Live costing** ⚡ — costs update as you tweak ingredients
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage 📖
 
-## Learn More
+**1. Add ingredients** — flour, butter, sugar, whatever you buy to make your
+products. Set the purchase unit (kg, L, piece) and what you paid.
 
-To learn more about Next.js, take a look at the following resources:
+**2. Set up overheads** — labor, packaging, rent. 8 common presets are ready
+to go; add your own as needed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**3. Create a product** — pick ingredients, enter how much goes into each
+product, assign overhead costs. The target price updates as you go.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**4. Adjust margin** — move the slider or type a number. See profit and
+gross margin change in real time.
 
-## Deploy on Vercel
+## Routes 🗺️
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Path | Page |
+|---|---|
+| `/` | Dashboard 🏠 |
+| `/ingredients` | Ingredients 🥘 |
+| `/overheads` | Overheads 🧾 |
+| `/categories` | Categories 📁 |
+| `/products` | Products 📦 |
+| `/products/[id]` | Product detail 🔍 |
