@@ -1,7 +1,8 @@
 'use client'
 
 import { useCategories } from '@/hooks/use-categories'
-import { CategoryForm } from '@/components/categories/category-form'
+import { FieldDialog } from '@/components/ui/field-dialog'
+import { ConfirmDeleteDialog } from '@/components/ui/confirm-delete-dialog'
 import { Button } from '@/components/ui/button'
 import { Trash2 } from 'lucide-react'
 
@@ -15,7 +16,7 @@ export default function CategoriesPage() {
           <h1 className="text-3xl font-bold tracking-tight">Product Categories</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Organize your products into categories.</p>
         </div>
-        <CategoryForm onSubmit={createCategory} />
+        <FieldDialog title="New Category" description="Create a product category for organizing your products." placeholder="e.g. Bakery, Beverages" buttonLabel="Add Category" onSubmit={createCategory} />
       </div>
 
       {categories.length === 0 ? (
@@ -28,9 +29,11 @@ export default function CategoriesPage() {
           {categories.map(cat => (
             <div key={cat.id} className="bg-white/70 dark:bg-white/5 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-soft flex items-center justify-between">
               <span className="font-medium">{cat.name}</span>
-              <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive" onClick={() => deleteCategory(cat.id)}>
-                <Trash2 className="size-4" />
-              </Button>
+              <ConfirmDeleteDialog itemName={cat.name} itemType="category" onConfirm={() => deleteCategory(cat.id)}>
+                <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive">
+                  <Trash2 className="size-4" />
+                </Button>
+              </ConfirmDeleteDialog>
             </div>
           ))}
         </div>

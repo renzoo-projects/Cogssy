@@ -153,7 +153,7 @@ export function ProductCostingCard({ ingredients, overheads, defaultMargin = 0, 
 
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
-          <span className="text-muted-foreground">Recommended Price</span>
+          <span className="text-muted-foreground">Selling Price</span>
           <span key={`price-${costs.recommendedPrice}`} className="text-xl font-bold tabular-nums" style={{ animation: `pop 0.3s ${spring}` }}>
             {formatCurrency(costs.recommendedPrice)}
           </span>

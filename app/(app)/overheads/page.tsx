@@ -1,7 +1,8 @@
 'use client'
 
 import { useOverheads } from '@/hooks/use-overheads'
-import { OverheadForm } from '@/components/overheads/overhead-form'
+import { FieldDialog } from '@/components/ui/field-dialog'
+import { ConfirmDeleteDialog } from '@/components/ui/confirm-delete-dialog'
 import { Button } from '@/components/ui/button'
 import { Lock, Trash2 } from 'lucide-react'
 
@@ -15,7 +16,7 @@ export default function OverheadsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Overhead Library</h1>
           <p className="text-sm text-muted-foreground mt-0.5">Manage overhead cost types you can assign to products.</p>
         </div>
-        <OverheadForm onSubmit={createOverhead} />
+        <FieldDialog title="New Overhead" description="Add an overhead cost type to your library." placeholder="e.g. Equipment Maintenance" buttonLabel="Add Overhead" onSubmit={createOverhead} />
       </div>
 
       <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl backdrop-saturate-150 rounded-2xl shadow-soft overflow-hidden">
@@ -42,15 +43,17 @@ export default function OverheadsPage() {
                     )}
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="size-8 text-muted-foreground hover:text-destructive"
-                      disabled={oh.isPreset}
-                      onClick={() => deleteOverhead(oh.id)}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                    {oh.isPreset ? (
+                      <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive" disabled>
+                        <Trash2 className="size-4" />
+                      </Button>
+                    ) : (
+                      <ConfirmDeleteDialog itemName={oh.name} itemType="overhead" onConfirm={() => deleteOverhead(oh.id)}>
+                        <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive">
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </ConfirmDeleteDialog>
+                    )}
                   </td>
                 </tr>
               ))}

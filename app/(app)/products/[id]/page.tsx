@@ -6,6 +6,7 @@ import { useProducts } from '@/hooks/use-products'
 import { useCategories } from '@/hooks/use-categories'
 import { ProductForm } from '@/components/products/product-form'
 import { Button } from '@/components/ui/button'
+import { ConfirmDeleteDialog } from '@/components/ui/confirm-delete-dialog'
 import { Separator } from '@/components/ui/separator'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { ArrowLeft, Pencil } from 'lucide-react'
@@ -153,7 +154,7 @@ export default function ProductDetailPage() {
               <span className="font-medium">{product.desiredMarginPercent}%</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Recommended Price</span>
+              <span className="text-muted-foreground">Selling Price</span>
               <span className="text-xl font-bold tabular-nums">{formatCurrency(costs.recommendedPrice)}</span>
             </div>
             <div className="flex justify-between">
@@ -166,16 +167,14 @@ export default function ProductDetailPage() {
             </div>
           </div>
           <Separator className="my-4" />
-          <Button
-            variant="outline"
-            className="w-full rounded-full text-muted-foreground active:scale-[0.97] transition-transform"
-            onClick={() => {
-              deleteProduct(product.id)
-              router.push('/products')
-            }}
-          >
-            Delete Product
-          </Button>
+          <ConfirmDeleteDialog itemName={product.name} itemType="product" onConfirm={() => { deleteProduct(product.id); router.push('/products') }}>
+            <Button
+              variant="destructive"
+              className="w-full rounded-full active:scale-[0.97] transition-transform"
+            >
+              Delete Product
+            </Button>
+          </ConfirmDeleteDialog>
         </div>
       </div>
     </div>

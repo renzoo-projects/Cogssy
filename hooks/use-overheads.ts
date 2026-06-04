@@ -1,6 +1,5 @@
 'use client'
 
-import { useCallback } from 'react'
 import { useSyncExternalStore } from 'react'
 import { OverheadPreset } from '@/types'
 import { getDataService } from '@/lib/data-service'
@@ -18,23 +17,23 @@ function getCachedOverheads(): OverheadPreset[] {
   return cached
 }
 
+function createOverhead(name: string): OverheadPreset {
+  const overhead = getDataService().createOverhead(name)
+  notifyStore()
+  return overhead
+}
+
+function deleteOverhead(id: string) {
+  getDataService().deleteOverhead(id)
+  notifyStore()
+}
+
 export function useOverheads() {
   const overheads = useSyncExternalStore(
     subscribeToStore,
     getCachedOverheads,
     () => EMPTY_ARRAY
   )
-
-  const createOverhead = useCallback((name: string): OverheadPreset => {
-    const overhead = getDataService().createOverhead(name)
-    notifyStore()
-    return overhead
-  }, [])
-
-  const deleteOverhead = useCallback((id: string) => {
-    getDataService().deleteOverhead(id)
-    notifyStore()
-  }, [])
 
   return { overheads, createOverhead, deleteOverhead }
 }

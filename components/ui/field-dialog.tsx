@@ -15,11 +15,15 @@ import {
 } from '@/components/ui/dialog'
 import { Plus } from 'lucide-react'
 
-interface CategoryFormProps {
+interface FieldDialogProps {
+  title: string
+  description: string
+  placeholder: string
+  buttonLabel: string
   onSubmit: (name: string) => void
 }
 
-export function CategoryForm({ onSubmit }: CategoryFormProps) {
+export function FieldDialog({ title, description, placeholder, buttonLabel, onSubmit }: FieldDialogProps) {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
 
@@ -36,19 +40,19 @@ export function CategoryForm({ onSubmit }: CategoryFormProps) {
         render={
           <Button className="rounded-full">
             <Plus className="size-4 mr-1.5" />
-            Add Category
+            {buttonLabel}
           </Button>
         }
       />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Category</DialogTitle>
-          <DialogDescription>Create a product category for organizing your products.</DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-2">
           <div className="space-y-2">
-            <Label htmlFor="name">Category Name</Label>
-            <Input id="name" placeholder="e.g. Bakery, Beverages" value={name} onChange={e => setName(e.target.value)} />
+            <Label htmlFor="name">{title}</Label>
+            <Input id="name" placeholder={placeholder} value={name} onChange={e => setName(e.target.value)} />
           </div>
         </div>
         <DialogFooter>

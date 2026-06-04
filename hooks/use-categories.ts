@@ -1,6 +1,5 @@
 'use client'
 
-import { useCallback } from 'react'
 import { useSyncExternalStore } from 'react'
 import { ProductCategory } from '@/types'
 import { getDataService } from '@/lib/data-service'
@@ -18,23 +17,23 @@ function getCachedCategories(): ProductCategory[] {
   return cached
 }
 
+function createCategory(name: string): ProductCategory {
+  const category = getDataService().createCategory(name)
+  notifyStore()
+  return category
+}
+
+function deleteCategory(id: string) {
+  getDataService().deleteCategory(id)
+  notifyStore()
+}
+
 export function useCategories() {
   const categories = useSyncExternalStore(
     subscribeToStore,
     getCachedCategories,
     () => EMPTY_ARRAY
   )
-
-  const createCategory = useCallback((name: string): ProductCategory => {
-    const category = getDataService().createCategory(name)
-    notifyStore()
-    return category
-  }, [])
-
-  const deleteCategory = useCallback((id: string) => {
-    getDataService().deleteCategory(id)
-    notifyStore()
-  }, [])
 
   return { categories, createCategory, deleteCategory }
 }

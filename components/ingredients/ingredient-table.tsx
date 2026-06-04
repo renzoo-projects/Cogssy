@@ -3,6 +3,7 @@
 import { Ingredient } from '@/types'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { ConfirmDeleteDialog } from '@/components/ui/confirm-delete-dialog'
 import { Pencil, Trash2 } from 'lucide-react'
 
 interface IngredientTableProps {
@@ -54,9 +55,11 @@ export function IngredientTable({ ingredients, onDelete, onEdit }: IngredientTab
                         <Pencil className="size-3.5" />
                       </Button>
                     )}
-                    <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive" onClick={() => onDelete(ingredient.id)}>
-                      <Trash2 className="size-4" />
-                    </Button>
+                    <ConfirmDeleteDialog itemName={ingredient.name} itemType="ingredient" onConfirm={() => onDelete(ingredient.id)}>
+                      <Button variant="ghost" size="icon" className="size-8 text-muted-foreground hover:text-destructive">
+                        <Trash2 className="size-4" />
+                      </Button>
+                    </ConfirmDeleteDialog>
                   </div>
                 </td>
               </tr>

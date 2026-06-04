@@ -1,33 +1,23 @@
 import { DataService } from './data-service'
-import { Ingredient, OverheadPreset, ProductCategory, Product, CreateIngredientInput, CreateProductInput, UnitType } from '@/types'
+import { Ingredient, OverheadPreset, ProductCategory, Product, CreateIngredientInput, CreateProductInput } from '@/types'
 import { calculateCostPerUnit, calculateIngredientCost } from './costing'
+import { UNIT_CONFIG } from './constants'
 
 const INGREDIENTS_KEY = 'cogs:ingredients'
 const CATEGORIES_KEY = 'cogs:categories'
 const OVERHEADS_KEY = 'cogs:overheads'
 const PRODUCTS_KEY = 'cogs:products'
 
-const UNIT_CONFIG: Record<UnitType, { baseUnit: UnitType; factor: number }> = {
-  g: { baseUnit: 'g', factor: 1 },
-  kg: { baseUnit: 'g', factor: 1000 },
-  ml: { baseUnit: 'ml', factor: 1 },
-  l: { baseUnit: 'ml', factor: 1000 },
-  piece: { baseUnit: 'piece', factor: 1 },
-  dozen: { baseUnit: 'piece', factor: 12 },
-  pack: { baseUnit: 'unit', factor: 1 },
-  box: { baseUnit: 'unit', factor: 1 },
-  unit: { baseUnit: 'unit', factor: 1 },
-}
-
 const DEFAULT_OVERHEADS: OverheadPreset[] = [
-  { id: crypto.randomUUID(), name: 'Labor', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Packaging', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Utilities', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Rent Allocation', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Transportation', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Marketing', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Depreciation', isPreset: true },
-  { id: crypto.randomUUID(), name: 'Miscellaneous', isPreset: true },
+  { id: 'preset-labor', name: 'Labor', isPreset: true },
+  { id: 'preset-packaging', name: 'Packaging', isPreset: true },
+  { id: 'preset-utilities', name: 'Utilities', isPreset: true },
+  { id: 'preset-rent', name: 'Rent Allocation', isPreset: true },
+  { id: 'preset-transport', name: 'Transportation', isPreset: true },
+  { id: 'preset-marketing', name: 'Marketing', isPreset: true },
+  { id: 'preset-depreciation', name: 'Depreciation', isPreset: true },
+  { id: 'preset-misc', name: 'Miscellaneous', isPreset: true },
+  { id: 'preset-tax', name: 'Tax', isPreset: true },
 ]
 
 function loadIngredients(): Ingredient[] {
