@@ -75,7 +75,7 @@ export function ProductCostingCard({ ingredients, overheads, defaultMargin = 0, 
       <div className="space-y-2 text-sm">
         <div className="flex justify-between">
           <span className="text-muted-foreground">
-            {bufferEnabled ? 'Ingredient Cost' : 'Total Ingredient Cost'}
+            Total Ingredient Cost
           </span>
           <span className="font-medium tabular-nums">{formatCurrency(costs.totalIngredientCost)}</span>
         </div>
