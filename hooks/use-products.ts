@@ -36,7 +36,11 @@ function deleteProduct(id: string) {
 }
 
 function getProductCosts(product: Product): ProductCosts {
-  return calculateProductCosts(product.ingredients, product.overheads, product.desiredMarginPercent, product.overheadBufferPercent)
+  return calculateProductCosts(
+    product.ingredients, product.overheads,
+    product.desiredMarginPercent, product.overheadBufferPercent,
+    getCachedProducts()
+  )
 }
 
 export function useProducts() {

@@ -207,6 +207,12 @@ export class LocalStorageAdapter implements DataService {
 
   deleteProduct(id: string): void {
     const products = loadProducts().filter(p => p.id !== id)
-    saveProducts(products)
+    const cascaded = products.map(p => ({
+      ...p,
+      ingredients: p.ingredients.map(i =>
+        i.productId === id ? { ...i, productId: undefined, cost: 0 } : i
+      ),
+    }))
+    saveProducts(cascaded)
   }
 }

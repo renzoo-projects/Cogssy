@@ -40,6 +40,7 @@ export interface ProductCategory {
 export interface ProductIngredient {
   ingredientId: string
   ingredientName: string
+  productId?: string
   quantity: number
   unit: UnitType
   cost: number
@@ -56,6 +57,8 @@ export interface Product {
   name: string
   categoryId?: string
   description?: string
+  recipeYield?: number
+  yieldUnit?: UnitType
   ingredients: ProductIngredient[]
   overheads: ProductOverhead[]
   desiredMarginPercent: number
@@ -68,6 +71,8 @@ export interface CreateProductInput {
   name: string
   categoryId?: string
   description?: string
+  recipeYield?: number
+  yieldUnit?: UnitType
   ingredients: Omit<ProductIngredient, 'cost'>[]
   overheads: ProductOverhead[]
   desiredMarginPercent: number

@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { ProductIngredient, ProductOverhead } from '@/types'
 import { calculateProductCosts } from '@/lib/costing'
+import { getDataService } from '@/lib/data-service'
 import { formatCurrency } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
@@ -27,7 +28,7 @@ export function ProductCostingCard({ ingredients, overheads, defaultMargin = 0, 
   const effectiveBuffer = bufferEnabled ? bufferPercent : 0
 
   const costs = useMemo(
-    () => calculateProductCosts(ingredients, overheads, margin, effectiveBuffer),
+    () => calculateProductCosts(ingredients, overheads, margin, effectiveBuffer, getDataService().getProducts()),
     [ingredients, overheads, margin, effectiveBuffer]
   )
 

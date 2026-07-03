@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button'
 import { ConfirmDeleteDialog } from '@/components/ui/confirm-delete-dialog'
 import { Separator } from '@/components/ui/separator'
 import { formatCurrency, formatDate } from '@/lib/utils'
-import { ArrowLeft, Pencil } from 'lucide-react'
+import { ArrowLeft, Pencil, Layers } from 'lucide-react'
 import { CreateProductInput, ProductIngredient } from '@/types'
 import { useIngredients } from '@/hooks/use-ingredients'
-import { calculateIngredientCost } from '@/lib/costing'
+import { calculateIngredientCost, resolveSubAssemblyCost } from '@/lib/costing'
 import { spring } from '@/lib/constants'
 
 export default function ProductDetailPage() {
@@ -40,6 +40,7 @@ export default function ProductDetailPage() {
 
   const handleUpdate = (input: CreateProductInput) => {
     const ingredients: ProductIngredient[] = input.ingredients.map(ing => {
+      if (ing.productId) return { ...ing, cost: 0 }
       const found = allIngredients.find(i => i.id === ing.ingredientId)
       return { ...ing, cost: found ? calculateIngredientCost(ing.quantity, found.costPerUnit) : 0 }
     })
@@ -77,6 +78,14 @@ export default function ProductDetailPage() {
         </div>
       )}
 
+      {product.recipeYield && (
+        <div className="bg-white/70 dark:bg-white/5 backdrop-blur-xl backdrop-saturate-150 rounded-2xl px-5 py-3 shadow-soft">
+          <p className="text-sm text-muted-foreground">
+            Recipe yield: {product.recipeYield} {product.yieldUnit ?? 'unit'}
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         <div className="lg:col-span-2 space-y-4">
           <div
@@ -88,15 +97,26 @@ export default function ProductDetailPage() {
               <p className="text-sm text-muted-foreground">No ingredients added.</p>
             ) : (
               <div className="space-y-2">
-                {product.ingredients.map((item) => (
-                  <div key={item.ingredientId} className="flex items-center justify-between bg-muted/30 rounded-xl px-4 py-2.5">
-                    <span className="font-medium text-sm">{item.ingredientName}</span>
-                    <div className="flex items-center gap-4 text-sm">
-                      <span className="text-muted-foreground">{item.quantity} {item.unit}</span>
-                      <span className="font-medium tabular-nums">{formatCurrency(item.cost)}</span>
+                {product.ingredients.map((item) => {
+                  const isSub = !!item.productId
+                  return (
+                    <div key={item.ingredientId} className="flex items-center justify-between bg-muted/30 rounded-xl px-4 py-2.5">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="font-medium text-sm truncate">{item.ingredientName}</span>
+                        {isSub && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-1.5 py-0.5 rounded-full shrink-0">
+                            <Layers className="size-2.5" />
+                            sub-assembly
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-4 text-sm">
+                        <span className="text-muted-foreground">{item.quantity} {item.unit}</span>
+                        <span className="font-medium tabular-nums">{formatCurrency(isSub ? resolveSubAssemblyCost(item, products) : item.cost)}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </div>
