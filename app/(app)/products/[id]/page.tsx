@@ -15,6 +15,10 @@ import { useIngredients } from '@/hooks/use-ingredients'
 import { calculateIngredientCost, resolveSubAssemblyCost } from '@/lib/costing'
 import { spring } from '@/lib/constants'
 
+export function generateStaticParams() {
+  return []
+}
+
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
