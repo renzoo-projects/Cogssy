@@ -1,5 +1,9 @@
+import ProductDetailPage from './product-detail-page'
+
 export function generateStaticParams() {
-  return []
+  return [{ id: '__placeholder__' }]
 }
 
-export { default } from './product-detail-page'
+export default function Page() {
+  return <ProductDetailPage />
+}
